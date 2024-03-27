@@ -7,6 +7,10 @@
   <img src="https://img.shields.io/badge/CopyRight-Jiang_Liu-%2396C40F" alt="CopyRight-Jiang_Liu"/>
 </div>
 
+<div align="center">
+    <a href="#">English</a> | <a href="README-zh.md">中文</a>
+</div>
+
 ## 1. Introduction
 
 When searching with Bing, Bing redirects the link to the search results to an intermediate page before jumping to the

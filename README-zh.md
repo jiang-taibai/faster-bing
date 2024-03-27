@@ -7,6 +7,10 @@
   <img src="https://img.shields.io/badge/CopyRight-Jiang_Liu-%2396C40F" alt="CopyRight-Jiang_Liu"/>
 </div>
 
+<div align="center">
+    <a href="README.md">English</a> | <a href="#">中文</a>
+</div>
+
 ## 1. 介绍
 
 在使用 Bing 搜索时，Bing 会将搜索结果的链接重定向到一个中间页面，然后再跳转到目标页面。这个中间页面会增加一次请求，导致访问速度变慢。
