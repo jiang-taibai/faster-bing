@@ -72,6 +72,12 @@ Bing 搜索的跳转链接的参数 `u` 是经过 Base64 编码的目标链接�
 如果你有任何问题或建议，欢迎在 [GitHub Issues](https://github.com/jiang-taibai/faster-bing/issues)
 或 [脚本反馈区](https://greasyfork.org/zh-CN/scripts/490999-faster-bing/feedback) 中提出。
 
+## 5. 未来计划
+
+- [ ] 即时修改选项：在用户点击链接时再修改链接，而不是在页面加载时就修改链接。此方法对于一些动态生成的链接可能会更加稳定。
+- [ ] 优化链接修改：对于一些特殊的链接，可能需要特殊处理。目前调研中。
+- [ ] 国际化：脚本支持多种语言（日志、提示等）。
+
 ## 5. 开源协议
 
 本项目遵循 [MIT](https://opensource.org/licenses/MIT) 开源协议。
