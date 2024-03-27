@@ -18,6 +18,10 @@
 
 安装之前，Bing 搜索结果的链接如下所示：
 
+```text
+https://www.bing.com/ck/a?!&&p=c7f1ae74d4db2156JmltdHM9MTcxMTQ5NzYwMCZpZ3VpZD0zYTZkZDUxMi0zN2FhLTYxYjUtMzJhNC1jN2UxMzZjYzYwNzYmaW5zaWQ9NTIwNQ&ptn=3&ver=2&hsh=3&fclid=3a6dd512-37aa-61b5-32a4-c7e136cc6076&u=a1aHR0cHM6Ly93d3cudGFtcGVybW9ua2V5Lm5ldC8&ntb=1
+```
+
 ![](./res/img/before-link.png)
 
 点击后会跳转到中间页面，然后再跳转到目标页面：
@@ -27,6 +31,10 @@
 ### 1.3 安装之后
 
 安装 Faster Bing 脚本后，Bing 搜索结果的链接如下所示：
+
+```text
+https://www.tampermonkey.net/
+```
 
 ![](./res/img/after-link.png)
 
