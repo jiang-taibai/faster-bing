@@ -65,7 +65,7 @@ Clicking on it will take you directly to the target page:
 
 ### 2.1 Installation of Tampermonkey
 
-Check out the [Tampermonkey Home Page](https://www.tampermonkey.net/index.php?browser=chrome&locale=zh) 查看详细的使用方法。
+Check out the [Tampermonkey Home Page](https://www.tampermonkey.net/index.php?browser=chrome&locale=zh) for details on how to use it.
 
 ### 2.2 Installation of the Script
 
