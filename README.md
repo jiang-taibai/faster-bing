@@ -18,6 +18,8 @@ target page. This intermediate page will add one more request, resulting in slow
 This project modifies the redirect link to the target link to realize direct access to the target page of Bing search
 results and speed up the access.
 
+![](./res/img/cover.jpg)
+
 This project is based on Tampermonkey development, can be used in Chrome and Firefox and other browsers that support
 Tampermonkey plugin.
 
@@ -76,6 +78,10 @@ search result link, and you will be taken directly to the target page.
 
 When using Bing search, the parameter `u` of the jump link of Bing search is the target link encoded by Base64. We only
 need to decode this parameter and then directly modify the `href` attribute of the link.
+
+In the figure below, the red path is Raw Bing and the blue path is Faster Bing: you can see that Raw Bing needs to go through an intermediate page, while Faster Bing can directly jump to the target page.
+
+![](./res/img/theory.png)
 
 ## 4. Feedback
 
