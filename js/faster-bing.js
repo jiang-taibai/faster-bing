@@ -116,6 +116,16 @@
             console.log('urlBase64:', urlBase64)
             return null;
         }
+
+        // 检查 realUrl 是否是有效的相对路径（以 '/' 开头）
+        if (realUrl.startsWith('/')) {
+            // 获取当前协议和域
+            let currentUrl = window.location.origin; // e.g., "https://www.bing.com"
+
+            // 将相对路径追加到当前 URL
+            realUrl = currentUrl + realUrl;
+        }
+
         if (!isValidUrl(realUrl)) {
             return null;
         }
