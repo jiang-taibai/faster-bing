@@ -1,15 +1,18 @@
 // ==UserScript==
 // @name         Faster Bing
-// @namespace    CoderJiang
-// @version      1.0.0
+// @name:en      Faster Bing
+// @namespace    https://coderjiang.com
+// @version      1.1.0
 // @description  将 Bing 的重定向 url 转换为真实 url
+// @description:en  Convert Bing's redirect url to a real url
 // @author       CoderJiang
 // @match        https://www.bing.com/*
 // @match        http://www.bing.com/*
 // @match        http://cn.bing.com/*
 // @match        https://cn.bing.com/*
-// @grant        none
+// @icon         https://cdn.coderjiang.com/pic-go/2024/faster-bing-logo-v1.png!pure
 // @license      MIT
+// @grant        none
 // ==/UserScript==
 
 (function () {
