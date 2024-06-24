@@ -113,7 +113,8 @@
         urlBase64 = urlBase64.replace(/^a1/, '');
         let realUrl = ''
         try {
-            realUrl = atob(urlBase64);
+            // 还原Base64 URL编码中的特殊字符以便解码
+            realUrl = atob(urlBase64.replace(/_/g, '/').replace(/-/g, '+'));
         } catch (error) {
             return null;
         }
