@@ -2,7 +2,7 @@
 
 <div align="center">
   <img src="https://img.shields.io/badge/Build-passing-%2396C40F" alt="Build-passing"/>
-  <img src="https://img.shields.io/badge/Version-1.0.0-%231081C1" alt="Version-1.0.0"/>
+  <img src="https://img.shields.io/badge/Version-1.1.1-%231081C1" alt="Version-1.1.1"/>
   <img src="https://img.shields.io/badge/License-MIT-%2396C40F" alt="License-MIT"/>
   <img src="https://img.shields.io/badge/CopyRight-Jiang_Liu-%2396C40F" alt="CopyRight-Jiang_Liu"/>
 </div>
@@ -89,11 +89,16 @@ Bing 搜索的跳转链接的参数 `u` 是经过 Base64 编码的目标链接�
 
 ## 5. 未来计划
 
-- [ ] 即时修改选项：在用户点击链接时再修改链接，而不是在页面加载时就修改链接。此方法对于一些动态生成的链接可能会更加稳定。
-- [ ] 优化链接修改：对于一些特殊的链接，可能需要特殊处理。目前调研中。
+- [x] 优化链接修改：对于一些特殊的链接，可能需要特殊处理。（感谢 [@Dqgfh](https://github.com/Dqgfh) 优化了对链接的处理逻辑。）
 - [ ] 国际化：脚本支持多种语言（日志、提示等）。
 
-## 6. 开源协议
+## 6. 贡献者 ✨
+
+<p>
+  <img src="https://github.com/Dqgfh.png" width="100" height="100" style="border-radius: 50%" alt="Dqgfh"/>
+</p>
+
+## 7. 开源协议
 
 本项目遵循 [MIT](https://opensource.org/licenses/MIT) 开源协议。
 

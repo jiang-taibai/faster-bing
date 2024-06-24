@@ -2,7 +2,7 @@
 
 <div align="center">
   <img src="https://img.shields.io/badge/Build-passing-%2396C40F" alt="Build-passing"/>
-  <img src="https://img.shields.io/badge/Version-1.0.0-%231081C1" alt="Version-1.0.0"/>
+  <img src="https://img.shields.io/badge/Version-1.1.1-%231081C1" alt="Version-1.1.1"/>
   <img src="https://img.shields.io/badge/License-MIT-%2396C40F" alt="License-MIT"/>
   <img src="https://img.shields.io/badge/CopyRight-Jiang_Liu-%2396C40F" alt="CopyRight-Jiang_Liu"/>
 </div>
@@ -95,13 +95,17 @@ or [Script Feedback Area](https://greasyfork.org/zh-CN/scripts/490999-faster-bin
 
 ## 5. Future Plan
 
-- [ ] Modify-on-the-fly option: Modify the link when the user clicks on it, instead of when the page loads. This method
-  may be more stable for some dynamically generated links.
-- [ ] Optimized link modification: For some special links, special handling may be required. Currently under
-  investigation.
+- [x] Optimized link modification: For some special links, special handling may be required. (Thanks to [@Dqgfh](https://github.com/Dqgfh) for optimizing the logic for handling links.)
 - [ ] Internationalization: Scripts support multiple languages (logs, hints, etc.).
 
-## 6. Open Source License
+## 6. Contributor ✨.
+
+<p>
+  <img src="https://github.com/Dqgfh.png" width="100" height="100" style="border-radius: 50%" alt="Dqgfh"/>
+</p>
+
+
+## 7. Open Source License
 
 This project follows the [MIT](https://opensource.org/licenses/MIT) open source protocol.
 
