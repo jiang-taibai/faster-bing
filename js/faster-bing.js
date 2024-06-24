@@ -2,7 +2,7 @@
 // @name         Faster Bing
 // @name:en      Faster Bing
 // @namespace    https://coderjiang.com
-// @version      1.1.0
+// @version      1.1.1
 // @description  将 Bing 的重定向 url 转换为真实 url
 // @description:en  Convert Bing's redirect url to a real url
 // @author       CoderJiang
