@@ -115,8 +115,6 @@
         try {
             realUrl = atob(urlBase64);
         } catch (error) {
-            console.log('url:', url)
-            console.log('urlBase64:', urlBase64)
             return null;
         }
 
