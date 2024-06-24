@@ -13,6 +13,7 @@
 // @icon         https://cdn.coderjiang.com/pic-go/2024/faster-bing-logo-v1.png!pure
 // @license      MIT
 // @grant        none
+// @noframes
 // ==/UserScript==
 
 (function () {
