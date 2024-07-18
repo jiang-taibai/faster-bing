@@ -219,11 +219,14 @@
         console.table(details);
     }
 
-    const result = convertBingRedirectUrls();
+    // 确保页面加载完成后能够正常修改 DOM
+    window.onload = () => {
+        const result = convertBingRedirectUrls();
 
-    console.log(logo);
+        console.log(logo);
 
-    if (Config.log.enable) {
-        log(result)
-    }
+        if (Config.log.enable) {
+            log(result)
+        }
+    };
 })();
