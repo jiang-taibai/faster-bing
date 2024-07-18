@@ -1,18 +1,24 @@
 // ==UserScript==
-// @name         Faster Bing
-// @name:en      Faster Bing
-// @namespace    https://coderjiang.com
-// @version      1.1.2
-// @description  将 Bing 的重定向 url 转换为真实 url
+// @name        Faster Bing
+// @name:en     Faster Bing
+// @namespace   https://coderjiang.com
+// @version     1.1.2
+// @description 将 Bing 的重定向 url 转换为真实 url
 // @description:en  Convert Bing's redirect url to a real url
-// @author       CoderJiang
-// @match        https://www.bing.com/*
-// @match        http://www.bing.com/*
-// @match        http://cn.bing.com/*
-// @match        https://cn.bing.com/*
-// @icon         https://cdn.coderjiang.com/pic-go/2024/faster-bing-logo-v1.png!pure
-// @license      MIT
-// @grant        none
+// @author      CoderJiang
+// @match       *://*.bing.com/*
+// @icon        https://cdn.coderjiang.com/pic-go/2024/faster-bing-logo-v1.png!pure
+// @license     MIT
+// @grant       none
+// @note        2024-07-18 v1.1.2
+//                  - 修复：修复在 Edge 浏览器中第二次之后搜索无法解析的问题
+//                  - 功能：提供对 aclick 的中转链接解析支持
+// @note        2024-06-24 v1.1.1
+//                  - 修复：修复 Base64 解码问题，提升链接解析准确性。
+//                  - 优化：针对脚本运行两遍的问题，限制脚本在主页面上运行，无需在 iframes 再运行一次。
+// @note        2024-06-24 v1.1.0
+//                  - 优化：识别并处理站内相对 URL，确保这些 URL 被正确解析并转换为绝对形式。
+//                  - 优化：添加 LOGO
 // @noframes
 // ==/UserScript==
 
