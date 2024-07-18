@@ -2,7 +2,7 @@
 // @name         Faster Bing
 // @name:en      Faster Bing
 // @namespace    https://coderjiang.com
-// @version      1.1.1
+// @version      1.1.2
 // @description  将 Bing 的重定向 url 转换为真实 url
 // @description:en  Convert Bing's redirect url to a real url
 // @author       CoderJiang
@@ -86,7 +86,7 @@
      * @returns {boolean}   是否是bing的重定向url
      */
     function isBingRedirectUrl(url) {
-        const pattern = /^https?:\/\/(.*\.)?bing\.com\/ck\/a/;
+        const pattern = /^https?:\/\/(.*\.)?bing\.com\/(ck\/a|aclick)/;
         return pattern.test(url);
     }
 
@@ -119,7 +119,8 @@
         } catch (error) {
             return null;
         }
-
+        // 解码后的 URL 可能包含特殊字符，例如 http%3a%2f%2fpuaai.net
+        realUrl = decodeURIComponent(realUrl);
         // 检查 realUrl 是否是有效的相对路径（以 '/' 开头）
         if (realUrl.startsWith('/')) {
             // 获取当前协议和域
@@ -219,14 +220,28 @@
         console.table(details);
     }
 
-    // 确保页面加载完成后能够正常修改 DOM
-    window.onload = () => {
-        const result = convertBingRedirectUrls();
+    console.log(logo);
 
-        console.log(logo);
+    const result = convertBingRedirectUrls();
+    if (Config.log.enable) {
+        log(result)
+    }
 
-        if (Config.log.enable) {
-            log(result)
-        }
-    };
+    // fix: 兼容 Edge 浏览器，解决在第二次搜索时无法解析的问题
+    new MutationObserver((mutations) => {
+        mutations.forEach((mutation) => {
+            mutation.addedNodes.forEach(node => {
+                if (node.id === 'b_content') {
+                    const result = convertBingRedirectUrls();
+                    if (Config.log.enable) {
+                        log(result)
+                    }
+                }
+            });
+        });
+    }).observe(document.body, {
+        childList: true,
+        subtree: false,
+    });
+
 })();
