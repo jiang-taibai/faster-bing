@@ -11,7 +11,7 @@
 // @license     MIT
 // @grant       none
 // @note        2024-07-19 v1.1.3
-//                  - 功能：对于 e.so.com/search/eclk 的链接，需要再次解析（示例：https://cn.bing.com/search?q=ui%E8%AE%BE%E8%AE%A1%E7%BD%91%E7%AB%99&first=1&FORM=PERE）
+//                  - 功能：对于 e.so.com/search/eclk 的链接，需要再次解析（示例：Firefox 访问 https://cn.bing.com/search?q=ui%E8%AE%BE%E8%AE%A1%E7%BD%91%E7%AB%99&first=1&FORM=PERE 时）
 // @note        2024-07-18 v1.1.2
 //                  - 修复：修复在 Edge 浏览器中第二次之后搜索无法解析的问题
 //                  - 功能：提供对 aclick 的中转链接解析支持
