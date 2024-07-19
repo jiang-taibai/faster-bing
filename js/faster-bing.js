@@ -2,7 +2,7 @@
 // @name        Faster Bing
 // @name:en     Faster Bing
 // @namespace   CoderJiang
-// @version     1.1.2
+// @version     1.1.3
 // @description 将 Bing 的重定向 url 转换为真实 url
 // @description:en  Convert Bing's redirect url to a real url
 // @author      CoderJiang
@@ -10,6 +10,8 @@
 // @icon        https://cdn.coderjiang.com/pic-go/2024/faster-bing-logo-v1.png!pure
 // @license     MIT
 // @grant       none
+// @note        2024-07-19 v1.1.3
+//                  - 功能：对于 e.so.com/search/eclk 的链接，需要再次解析（示例：https://cn.bing.com/search?q=ui%E8%AE%BE%E8%AE%A1%E7%BD%91%E7%AB%99&first=1&FORM=PERE）
 // @note        2024-07-18 v1.1.2
 //                  - 修复：修复在 Edge 浏览器中第二次之后搜索无法解析的问题
 //                  - 功能：提供对 aclick 的中转链接解析支持
@@ -89,11 +91,21 @@
      * 判断是否是bing的重定向url
      *
      * @param url   url
-     * @returns {boolean}   是否是bing的重定向url
+     * @returns {{valid: boolean, key: (string|null)}}   是否是bing的重定向url
      */
-    function isBingRedirectUrl(url) {
-        const pattern = /^https?:\/\/(.*\.)?bing\.com\/(ck\/a|aclick)/;
-        return pattern.test(url);
+    function checkBingRedirectUrl(url) {
+        const patterns = [
+            // eg: https://www.bing.com/ck/a...
+            {pattern: /^https?:\/\/(.*\.)?bing\.com\/(ck\/a|aclick)/, key: 'u'},
+            // eg: https://e.so.com/search/eclk
+            {pattern: /^https?:\/\/e\.so\.com\/search\/eclk/, key: 'aurl'},
+        ];
+        for (const {pattern, key} of patterns) {
+            if (pattern.test(url)) {
+                return {valid: true, key: key};
+            }
+        }
+        return {valid: false, key: void 0};
     }
 
     /**
@@ -112,11 +124,12 @@
 
     /**
      * 将重定向url转换为真实url
-     * @param url   Bing的重定向url，必须包含参数 u
+     * @param url   Bing的重定向url，必须包含 key 指定的链接参数(eg: u)
+     * @param key   参数名
      * @returns {string|null}   真实url，转换失败则返回null
      */
-    function redirect2RealUrl(url) {
-        let urlBase64 = getUrlParameter(url, 'u')
+    function redirect2RealUrl(url, key) {
+        let urlBase64 = getUrlParameter(url, key)
         urlBase64 = urlBase64.replace(/^a1/, '');
         let realUrl = ''
         try {
@@ -144,16 +157,24 @@
 
     /**
      * 找到所有的链接并转换为真实url
-     * @returns {{failedUrls: *[], urls: *[], count: number}}
+     * @returns {{failedUrls: *[], processedUrls: *[]}}
      */
     function convertBingRedirectUrls() {
         const failedUrls = [];
         const processedUrls = [];
         const links = document.querySelectorAll("a");
+        // v1.1.3: 对于 e.so.com/search/eclk 的链接，需要再次解析，因此使用递归解析
+        const resolve = (href) => {
+            const checkResult = checkBingRedirectUrl(href)
+            if (!checkResult.valid) return href
+            const realUrl = redirect2RealUrl(href, checkResult.key);
+            return realUrl ? resolve(realUrl) : null;
+        }
         for (const link of links) {
             const href = link.href;
-            if (isBingRedirectUrl(href)) {
-                const realUrl = redirect2RealUrl(href);
+            const checkResult = checkBingRedirectUrl(href)
+            if (checkResult.valid) {
+                const realUrl = resolve(href);
                 if (realUrl) {
                     link.href = realUrl;
                     processedUrls.push({
@@ -233,7 +254,7 @@
         log(result)
     }
 
-    // fix: 兼容 Edge 浏览器，解决在第二次搜索时无法解析的问题
+    // v1.1.2: 兼容 Edge 浏览器，解决在第二次搜索时无法解析的问题
     new MutationObserver((mutations) => {
         mutations.forEach((mutation) => {
             mutation.addedNodes.forEach(node => {
