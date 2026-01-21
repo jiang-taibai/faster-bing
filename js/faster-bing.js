@@ -2,7 +2,7 @@
 // @name        Faster Bing
 // @name:en     Faster Bing
 // @namespace   CoderJiang
-// @version     1.1.3
+// @version     1.1.4
 // @description 将 Bing 的重定向 url 转换为真实 url
 // @description:en  Convert Bing's redirect url to a real url
 // @author      CoderJiang
@@ -10,6 +10,8 @@
 // @icon        https://cdn.coderjiang.com/pic-go/2024/faster-bing-logo-v1.png!pure
 // @license     MIT
 // @grant       none
+// @note        2024-12-26 v1.1.4
+//                  - 功能：修复一些动态创建的链接（例如第一条人工智能生成的解答）无法解析的问题，同时解决在 v1.1.2 中无法解析的问题
 // @note        2024-07-19 v1.1.3
 //                  - 功能：对于 e.so.com/search/eclk 的链接，需要再次解析（示例：Firefox 访问 https://cn.bing.com/search?q=ui%E8%AE%BE%E8%AE%A1%E7%BD%91%E7%AB%99&first=1&FORM=PERE 时）
 // @note        2024-07-18 v1.1.2
@@ -163,6 +165,30 @@
         const failedUrls = [];
         const processedUrls = [];
         const links = document.querySelectorAll("a");
+
+        for (const link of links) {
+            const {realUrl, originalUrl} = convertBingRedirectUrl(link);
+            if (realUrl) {
+                processedUrls.push({
+                    realUrl,
+                    originalUrl
+                });
+            } else {
+                failedUrls.push(originalUrl);
+            }
+        }
+        return {
+            processedUrls,
+            failedUrls
+        };
+    }
+
+    /**
+     * 将bing的重定向url转换为真实url
+     * @param aElement  a标签元素
+     * @returns {{realUrl: null, originalUrl: null}}
+     */
+    function convertBingRedirectUrl(aElement) {
         // v1.1.3: 对于 e.so.com/search/eclk 的链接，需要再次解析，因此使用递归解析
         const resolve = (href) => {
             const checkResult = checkBingRedirectUrl(href)
@@ -170,26 +196,16 @@
             const realUrl = redirect2RealUrl(href, checkResult.key);
             return realUrl ? resolve(realUrl) : null;
         }
-        for (const link of links) {
-            const href = link.href;
-            const checkResult = checkBingRedirectUrl(href)
-            if (checkResult.valid) {
-                const realUrl = resolve(href);
-                if (realUrl) {
-                    link.href = realUrl;
-                    processedUrls.push({
-                        realUrl,
-                        originalUrl: href
-                    });
-                } else {
-                    failedUrls.push(href);
-                }
+        const originalUrl = aElement.href;
+        const checkResult = checkBingRedirectUrl(originalUrl)
+        let realUrl = null;
+        if (checkResult.valid) {
+            realUrl = resolve(originalUrl);
+            if (realUrl) {
+                aElement.href = realUrl;
             }
         }
-        return {
-            processedUrls,
-            failedUrls
-        };
+        return {realUrl, originalUrl}
     }
 
     /**
@@ -254,21 +270,37 @@
         log(result)
     }
 
-    // v1.1.2: 兼容 Edge 浏览器，解决在第二次搜索时无法解析的问题
-    new MutationObserver((mutations) => {
-        mutations.forEach((mutation) => {
-            mutation.addedNodes.forEach(node => {
-                if (node.id === 'b_content') {
-                    const result = convertBingRedirectUrls();
-                    if (Config.log.enable) {
-                        log(result)
+    // v1.1.3: 修复一些动态创建的链接无法解析的问题，同时解决在 v1.1.2 中无法解析的问题
+    new MutationObserver((mutationsList) => {
+        for (const mutation of mutationsList) {
+            // 检测到新的 a 标签被添加
+            if (mutation.type === 'childList') {
+                mutation.addedNodes.forEach((node) => {
+                    if (node.nodeType === 1) { // 元素节点
+                        // 如果是 a 标签
+                        if (node.tagName === 'A') {
+                            convertBingRedirectUrl(node);
+                        }
+                        // 如果子节点中包含 a 标签
+                        node.querySelectorAll?.('a').forEach((a) => {
+                            convertBingRedirectUrl(a);
+                        });
                     }
+                });
+            }
+            // 检测到 a 标签的 href 属性被修改
+            if (mutation.type === 'attributes' && mutation.attributeName === 'href') {
+                const target = mutation.target;
+                if (target.tagName === 'A') {
+                    convertBingRedirectUrl(target);
                 }
-            });
-        });
+            }
+        }
     }).observe(document.body, {
-        childList: true,
-        subtree: false,
+        childList: true,     // 监听子节点的添加或删除
+        subtree: true,       // 监听所有后代节点
+        attributes: true,    // 监听属性变化
+        attributeFilter: ['href'] // 仅监听 href 属性的变化
     });
 
 })();
